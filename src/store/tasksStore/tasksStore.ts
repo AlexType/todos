@@ -17,14 +17,13 @@ class TasksStore {
     makeAutoObservable(this);
   }
 
-  add(form: TaskCreateForm) {
-
+  add = (form: TaskCreateForm) => {
     const task = createTask(form);
     console.log(task);
     this._tasks = [...this._tasks, task];
-  }
+  };
 
-  update(id: string, form: TaskUpdateForm): boolean {
+  update = (id: string, form: TaskUpdateForm): boolean => {
     const index = this.tasks.findIndex((task) => task.id === id);
 
     if (index === -1) {
@@ -35,11 +34,15 @@ class TasksStore {
     this._tasks = [...this.tasks.slice(0, index), updatedTask, ...this.tasks.slice(index + 1)];
 
     return true;
-  }
+  };
 
-  remove(id: string) {
+  remove = (id: string) => {
     this._tasks = this.tasks.filter((task) => task.id !== id);
-  }
+  };
+
+  clearCompleted = () => {
+    this._tasks = this.tasks.filter((task) => !task.completed);
+  };
 }
 
 const tasksStore = new TasksStore();
