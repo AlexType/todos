@@ -1,11 +1,11 @@
-import TaskForm from "./components/TaskForm";
+import Todo from "./components/Todo";
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="container py-5" style={{ maxWidth: 500 }}>
-      <TaskForm />
+    <div style={{ maxWidth: 700, padding: 100 }}>
+      <Todo />
     </div>
   );
-}
+};
 
 export default App;
