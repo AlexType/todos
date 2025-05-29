@@ -1,0 +1,39 @@
+.component {
+  --checkbox-size: 24px;
+
+  gap: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 16px;
+  transition: background-color .2s ease-out;
+
+  :global(.ant-checkbox-inner) {
+    width: var(--checkbox-size);
+    height: var(--checkbox-size);
+    border-radius: 100px;
+
+    &::after {
+      display: none;
+    }
+  }
+
+  :global(.ant-checkbox-label) {
+    word-break: break-word;
+    white-space: pre-line;
+  }
+
+  &.isCompleted {
+    background-color: var(--base-color-50);
+
+    span {
+      text-decoration: line-through;
+    }
+  }
+
+  .checkbox {
+    flex: 1;
+    padding: 8px 16px;
+    padding-right: 0;
+  }
+}
