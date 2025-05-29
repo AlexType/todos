@@ -1,38 +1,51 @@
-import { observer } from 'mobx-react-lite';
-
 import TaskForm from '../TaskForm';
 import TaskList from '../TaskList';
-import { useCallback, useMemo } from 'react';
-import tasksStore from '@/store/tasksStore';
+import { useCallback, useMemo, useState } from 'react';
 import TodoFooter from '../TodoFooter';
 
 import classes from './Todo.module.scss';
 import { sortTasks } from '@/utils/sortTasks';
-import filterStore from '@/store/filterStore';
 import { filterTasks } from '@/utils/filterTasks';
+import { useTasks } from '@/hooks/useTasks';
+import { CommentFormProvider, type TodoContextValue } from '@/context/TodoContext';
+import type { TaskFilterType } from '@/models/task/TaskFilterType';
 
-const Todo: React.FC = observer(() => {
-  const { tasks } = tasksStore;
-  const { filter } = filterStore;
+const Todo: React.FC = () => {
+  const tasksData = useTasks();
+  const [filter, setFilter] = useState<TaskFilterType>('all');
 
-  const filteredTasks = useMemo(() => filterTasks(tasks, filter), [filter, tasks]);
+  const ctx = useMemo<TodoContextValue>(
+    () => ({
+      changeFilter: setFilter,
+      removeTask: tasksData.removeTask,
+      updateTask: tasksData.updateTaskById,
+      clearCompletedTasks: tasksData.clearCompletedTasks,
+    }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+
+  const filteredTasks = useMemo(() => filterTasks(tasksData.tasks, filter), [filter, tasksData.tasks]);
   const sortedTasks = useMemo(() => {
     return sortTasks(filteredTasks, 'createdAt', 'desc');
   }, [filteredTasks]);
 
   const createHandler = useCallback((title: string) => {
-    tasksStore.add({ title });
+    tasksData.addTask({ title });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div className={classes.component}>
-      <TaskForm onCreate={createHandler} />
-      <div className={classes.body}>
-        <TaskList tasks={sortedTasks} filter={filter} />
+    <CommentFormProvider value={ctx}>
+      <div className={classes.component}>
+        <TaskForm onCreate={createHandler} />
+        <div className={classes.body}>
+          <TaskList tasks={sortedTasks} filter={filter} />
+        </div>
+        <TodoFooter tasks={tasksData.tasks} filter={filter} />
       </div>
-      <TodoFooter tasks={tasks} filter={filter} />
-    </div>
+    </CommentFormProvider>
   );
-});
+};
 
 export default Todo;

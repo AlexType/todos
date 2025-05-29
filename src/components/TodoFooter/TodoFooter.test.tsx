@@ -1,17 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import TodoFooter from './TodoFooter';
-import tasksStore from '@/store/tasksStore';
+import { useTodoContext } from '@/context/TodoContext';
 import type { TaskDto } from '@/models/task/TaskDto';
 
+// Мокируем зависимости
 vi.mock('../TaskFilter', () => ({
   default: vi.fn(() => <div>TaskFilter Mock</div>),
-}));
-
-vi.mock('@/store/tasksStore', () => ({
-  default: {
-    clearCompleted: vi.fn(),
-  },
 }));
 
 vi.mock('@/utils/pluralForm', () => ({
@@ -22,12 +17,28 @@ vi.mock('@/utils/pluralForm', () => ({
   }),
 }));
 
+vi.mock('@/context/TodoContext', () => ({
+  useTodoContext: vi.fn(() => ({
+    clearCompletedTasks: vi.fn()
+  }))
+}));
+
 describe('TodoFooter', () => {
   const mockTasks: TaskDto[] = [
     { id: '1', title: 'Task 1', completed: false, createdAt: '' },
     { id: '2', title: 'Task 2', completed: true, createdAt: '' },
     { id: '3', title: 'Task 3', completed: false, createdAt: '' },
   ];
+
+  const mockClearCompleted = vi.fn();
+
+  beforeEach(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (useTodoContext as any).mockImplementation(() => ({
+      clearCompletedTasks: mockClearCompleted
+    }));
+    mockClearCompleted.mockClear();
+  });
 
   it('should display correct count of remaining tasks', () => {
     render(<TodoFooter tasks={mockTasks} filter="all" />);
@@ -47,11 +58,11 @@ describe('TodoFooter', () => {
     expect(button).toBeDisabled();
   });
 
-  it('should call clearCompleted when button clicked', () => {
+  it('should call clearCompletedTasks from context when button clicked', () => {
     render(<TodoFooter tasks={mockTasks} filter="all" />);
     const button = screen.getByRole('button', { name: /очистить/i });
     button.click();
-    expect(tasksStore.clearCompleted).toHaveBeenCalled();
+    expect(mockClearCompleted).toHaveBeenCalled();
   });
 
   it('should render ClearOutlined icon', () => {
@@ -69,5 +80,10 @@ describe('TodoFooter', () => {
     const manyTasks = Array(5).fill(mockTasks[0]);
     render(<TodoFooter tasks={manyTasks} filter="all" />);
     expect(screen.getByText('Осталось: 5 задач')).toBeInTheDocument();
+  });
+
+  it('should render TaskFilter with correct props', () => {
+    render(<TodoFooter tasks={mockTasks} filter="active" />);
+    expect(screen.getByText('TaskFilter Mock')).toBeInTheDocument();
   });
 });

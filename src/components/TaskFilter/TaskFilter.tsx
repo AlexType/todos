@@ -1,14 +1,14 @@
 import type { CheckboxGroupProps } from 'antd/es/checkbox';
 import type { TaskFilterType } from '@/models/task/TaskFilterType';
-import filterStore from '@/store/filterStore';
 import React from 'react';
 import { Group } from 'antd/es/radio';
 
 type Props = {
   filter: TaskFilterType;
+  onChange: (value: TaskFilterType) => void;
 };
 
-const TaskFilter: React.FC<Props> = ({ filter }) => {
+const TaskFilter: React.FC<Props> = ({ filter, onChange }) => {
   const options: CheckboxGroupProps<TaskFilterType>['options'] = [
     { label: 'Все', value: 'all' },
     { label: 'Активные', value: 'active' },
@@ -20,7 +20,7 @@ const TaskFilter: React.FC<Props> = ({ filter }) => {
       block
       options={options}
       value={filter}
-      onChange={(event) => filterStore.setFilter(event.target.value as TaskFilterType)}
+      onChange={(event) => onChange(event.target.value as TaskFilterType)}
       optionType="button"
     />
   );

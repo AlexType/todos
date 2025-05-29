@@ -3,23 +3,25 @@ import Checkbox from 'antd/es/checkbox/Checkbox';
 import classes from './TaskItem.module.scss';
 import clsx from 'clsx';
 import type { TaskDto } from '@/models/task/TaskDto';
-import tasksStore from '@/store/tasksStore';
 import Button from 'antd/es/button';
 import Tooltip from 'antd/es/tooltip';
 import DeleteOutlined from '@ant-design/icons/DeleteOutlined';
 import React from 'react';
+import { useTodoContext } from '@/context/TodoContext';
 
 type Props = {
   task: TaskDto;
 };
 
 const TaskItem: React.FC<Props> = ({ task }) => {
+  const ctx = useTodoContext();
+
   function changeCheckedHandler(isChecked: boolean) {
-    tasksStore.update(task.id, { completed: isChecked });
+    ctx.updateTask(task.id, { completed: isChecked });
   }
 
   function deleteHandler() {
-    tasksStore.remove(task.id);
+    ctx.removeTask(task.id);
   }
 
   return (

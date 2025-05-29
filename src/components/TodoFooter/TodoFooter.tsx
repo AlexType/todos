@@ -5,7 +5,7 @@ import Button from 'antd/es/button';
 import ClearOutlined from '@ant-design/icons/ClearOutlined';
 import type { TaskFilterType } from '@/models/task/TaskFilterType';
 import { pluralForm } from '@/utils/pluralForm';
-import tasksStore from '@/store/tasksStore';
+import { useTodoContext } from '@/context/TodoContext';
 
 type Props = {
   tasks: TaskDto[];
@@ -13,6 +13,7 @@ type Props = {
 };
 
 const TodoFooter: React.FC<Props> = ({ tasks, filter }) => {
+  const ctx = useTodoContext()
   const leftTotal = tasks.filter((task) => !task.completed).length;
   const pluralLeft = pluralForm(leftTotal, ['задача', 'задачи', 'задач']);
   const canClear = tasks.some((task) => task.completed);
@@ -22,8 +23,8 @@ const TodoFooter: React.FC<Props> = ({ tasks, filter }) => {
       <span className={classes.left}>
         Осталось: {leftTotal} {pluralLeft}
       </span>
-      <TaskFilter filter={filter} />
-      <Button variant="outlined" icon={<ClearOutlined />} disabled={!canClear} onClick={tasksStore.clearCompleted}>
+      <TaskFilter filter={filter} onChange={ctx.changeFilter} />
+      <Button variant="outlined" icon={<ClearOutlined />} disabled={!canClear} onClick={ctx.clearCompletedTasks}>
         Очистить выполненные
       </Button>
     </div>
