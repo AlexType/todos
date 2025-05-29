@@ -9,6 +9,9 @@
     "lint": "eslint .",
     "format": "prettier --write \"**/*.{js,ts,tsx,md,scss}\"",
     "format:check": "prettier --check \"**/*.{js,ts,tsx,md,scss}\"",
+    "test": "vitest",
+    "test:watch": "vitest watch",
+    "test:coverage": "vitest run --coverage",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -23,10 +26,14 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@types/jsdom": "^21.1.7",
     "@types/node": "^22.15.23",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.4.1",
+    "@vitest/coverage-v8": "^3.1.4",
     "eslint": "^9.27.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-react": "^7.37.5",
@@ -34,10 +41,12 @@
     "eslint-plugin-react-refresh": "^0.4.19",
     "eslint-plugin-unused-imports": "^4.1.4",
     "globals": "^16.0.0",
+    "jsdom": "^26.1.0",
     "prettier": "^3.5.3",
     "sass-embedded": "^1.89.0",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.30.1",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "vitest": "^3.1.4"
   }
 }

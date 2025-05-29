@@ -1,8 +1,8 @@
 import type { CheckboxGroupProps } from 'antd/es/checkbox';
 import type { TaskFilterType } from '@/models/task/TaskFilterType';
-import { Radio } from 'antd';
 import filterStore from '@/store/filterStore';
 import React from 'react';
+import { Group } from 'antd/es/radio';
 
 type Props = {
   filter: TaskFilterType;
@@ -16,7 +16,7 @@ const TaskFilter: React.FC<Props> = ({ filter }) => {
   ];
 
   return (
-    <Radio.Group
+    <Group
       block
       options={options}
       value={filter}

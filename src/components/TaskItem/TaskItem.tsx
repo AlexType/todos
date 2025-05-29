@@ -4,7 +4,8 @@ import classes from './TaskItem.module.scss';
 import clsx from 'clsx';
 import type { TaskDto } from '@/models/task/TaskDto';
 import tasksStore from '@/store/tasksStore';
-import { Button, Tooltip } from 'antd';
+import Button from 'antd/es/button';
+import Tooltip from 'antd/es/tooltip';
 import DeleteOutlined from '@ant-design/icons/DeleteOutlined';
 import React from 'react';
 

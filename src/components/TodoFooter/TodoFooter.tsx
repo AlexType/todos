@@ -1,7 +1,7 @@
 import classes from './TodoFooter.module.scss';
 import type { TaskDto } from '@/models/task/TaskDto';
 import TaskFilter from '../TaskFilter';
-import { Button } from 'antd';
+import Button from 'antd/es/button';
 import ClearOutlined from '@ant-design/icons/ClearOutlined';
 import type { TaskFilterType } from '@/models/task/TaskFilterType';
 import { pluralForm } from '@/utils/pluralForm';

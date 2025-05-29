@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Input from 'antd/es/input';
 import Button from 'antd/es/button';
 import EnterOutlined from '@ant-design/icons/EnterOutlined';
-import { Tooltip } from 'antd';
+import Tooltip from 'antd/es/tooltip';
 
 type Props = {
   onCreate?: (title: string) => void;

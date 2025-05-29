@@ -2,7 +2,7 @@ import type { TaskDto } from '@/models/task/TaskDto';
 import TaskItem from '../TaskItem';
 
 import classes from './TaskList.module.scss';
-import { Empty } from 'antd';
+import Empty from 'antd/es/empty';
 import type { TaskFilterType } from '@/models/task/TaskFilterType';
 import { useMemo } from 'react';
 
