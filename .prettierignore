@@ -1,0 +1,9 @@
+node_modules
+yarn.lock
+lib
+build
+dist
+docs
+.turbo
+.husky
+.git
