@@ -1,0 +1,10 @@
+.component {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.body {
+  border-radius: 8px;
+  border: 1px solid var(--base-color-200);
+}

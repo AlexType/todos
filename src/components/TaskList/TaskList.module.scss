@@ -1,0 +1,15 @@
+.component {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+
+  li {
+    list-style-type: none;
+    border-bottom: 1px solid var(--base-color-200);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
