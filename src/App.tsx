@@ -1,8 +1,9 @@
-import Todo from "./components/Todo";
+import Todo from './components/Todo';
 
 const App: React.FC = () => {
   return (
-    <div style={{ maxWidth: 700, padding: 100 }}>
+    <div className="stand-demo">
+      <h1>Demo Todos</h1>
       <Todo />
     </div>
   );
